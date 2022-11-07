@@ -1,7 +1,12 @@
 import Head from 'next/head';
+import { GetServerSideProps } from 'next'
 import styles from '../styles/Home.module.css';
 
-export default function Home() {
+interface Props {
+    time: string;
+}
+
+export default function Home({time}: Props) {
     return (
         <div className={styles.container}>
             <Head>
@@ -15,8 +20,16 @@ export default function Home() {
                     Next js on Azure Static Web Apps
                 </h1>
 
-                <p>{new Date().toString()}</p>
+                <p>{time}</p>
             </main>
         </div>
     );
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    return {
+        props: {
+            time: new Date().toString()
+        }
+    }
+  }
